@@ -18,11 +18,11 @@ const Address = sequelize.define('Adress', {
       primaryKey: true
   },
   shop_name:{
-      type: Sequelize.VARCHAR(15),
+      type: Sequelize.STRING,
       allowNull: false
   },
   address_info:{
-      type: Sequelize.VARCHAR(50),
+      type: Sequelize.STRING,
       allowNull: false
   },
 });
