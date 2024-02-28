@@ -111,7 +111,7 @@ const Customer = sequelize.define('Customer', {
     date:{
         type: Sequelize.DATE,
         allowNull: false
-    }
+    }                    
   });
 
   const Order = sequelize.define('Order', {
@@ -147,6 +147,49 @@ const Customer = sequelize.define('Customer', {
     }
   });
 
+  sequelize.sync();
+
+    app.get('/Address',(req, res) =>{
+        Address.findAll().then(Address => {
+            res.json(Address);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    });
+
+    app.post('/Address',(req, res) =>{
+        Book.create(req.body).then(Address => {
+            res.send(Adress);
+        }).catch(err => {
+                res.status(500).send(err);
+            });
+    });
+
+    app.put('/Address',(req,res) => {
+
+            if (!Address) {
+                res.status(404).send('Address not found');
+            } else {
+                Address.update(req.body).then(() =>{
+                    res.send(Address);
+                }).catch(err => {
+                    res.status(500).send(err);
+                });
+            }
+    });
+
+    app.delete('/Address',(req,res) => {
+        
+        if (!Address){
+            res.status(404).send('Address not found');
+        } else {
+            Address.destroy().then(() => {
+                res.send({});
+            }).catch(err => {
+                res.status(500).send(err);
+            });
+        }
+    });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port http://localhost:${port}`)); 
