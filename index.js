@@ -1,6 +1,8 @@
-const express = require("express");
+const express = require('express');
 const Sequelize = require('sequelize');
 const app = express();
+
+//const db = new sqlite3.Database('./Database/Coffee.sqlite');
 
 app.use(express.json());
 
@@ -10,11 +12,11 @@ const sequelize = new Sequelize('database','username','password',{
     storage: './Database/Coffee.sqlite'
 });
 
-const Address = sequelize.define('Adress', {
+const Address = sequelize.define('Address', {
     
   tax_id:{
       type: Sequelize.INTEGER,
-      autoIncrement: true,
+      autoIncrement: true,  
       primaryKey: true
   },
   shop_name:{
@@ -207,6 +209,19 @@ const Customer = sequelize.define('Customer', {
         });
     });
 
+    app.get('/Customer/:id',(req, res) =>{
+        Customer.findByPk(req.params.id).then(Customer => {
+            if (!Customer){
+                res.status(404).send('Customer not found');
+            } else{
+                res.json(Customer);
+            }
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    });
+    
+
     app.post('/Customer',(req, res) =>{
         Customer.create(req.body).then(Customer => {
             res.send(Customer);
@@ -215,7 +230,7 @@ const Customer = sequelize.define('Customer', {
             });
     });
 
-    app.put('/Customer',(req,res) => {
+    app.put('/Customer/:id',(req,res) => {
         Customer.findByPk(req.params.id).then(Customer => {
             if (!Customer) {
                 res.status(404).send('Customer not found');
@@ -231,7 +246,7 @@ const Customer = sequelize.define('Customer', {
         });
     });
 
-    app.delete('/Customer',(req,res) => {   
+    app.delete('/Customer/:id',(req,res) => {   
         Customer.findByPk(req.params.id).then(Customer=> {
             if (!Customer){
                 res.status(404).send('Customer not found');
@@ -256,6 +271,17 @@ const Customer = sequelize.define('Customer', {
             res.status(500).send(err);
         });
     });
+    app.get('/Employee/:id',(req, res) =>{
+        Employee.findByPk(req.params.id).then(Employee => {
+            if (!Employee){
+                res.status(404).send('Employee not found');
+            } else{
+                res.json(Employee);
+            }
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    });
 
     app.post('/Employee',(req, res) =>{
         Employee.create(req.body).then(Employee => {
@@ -265,7 +291,7 @@ const Customer = sequelize.define('Customer', {
             });
     });
 
-    app.put('/Employee',(req,res) => {
+    app.put('/Employee/:id',(req,res) => {
         Employee.findByPk(req.params.id).then(Employee => {
             if (!Employee) {
                 res.status(404).send('Employee not found');
@@ -281,7 +307,7 @@ const Customer = sequelize.define('Customer', {
         });
     });
 
-    app.delete('/Employee',(req,res) => {
+    app.delete('/Employee/:id',(req,res) => {
         Employee.findByPk(req.params.id).then(Employee=> {
             if (!Employee){
                 res.status(404).send('Employee not found');
@@ -308,6 +334,18 @@ app.get('/Item',(req, res) =>{
     });
 });
 
+app.get('/Item/:id',(req, res) =>{
+    Item.findByPk(req.params.id).then(Item => {
+        if (!Item){
+            res.status(404).send('Item not found');
+        } else{
+            res.json(Item);
+        }
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+});
+
 app.post('/Item',(req, res) =>{
     Item.create(req.body).then(Item => {
         res.send(Item);
@@ -316,7 +354,7 @@ app.post('/Item',(req, res) =>{
         });
 });
 
-app.put('/Item',(req,res) => {
+app.put('/Item/:id',(req,res) => {
     Item.findByPk(req.params.id).then(Item => {
         if (!Item) {
             res.status(404).send('Item not found');
@@ -332,7 +370,7 @@ app.put('/Item',(req,res) => {
     });
 });
 
-app.delete('/Item',(req,res) => {
+app.delete('/Item/:id',(req,res) => {
     Item.findByPk(req.params.id).then(Item=> {
         if (!Item){
             res.status(404).send('Item not found');
@@ -355,6 +393,18 @@ app.delete('/Item',(req,res) => {
 app.get('/Order',(req, res) =>{
     Order.findAll().then(Order => {
         res.json(Order);
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+});
+
+app.get('/Customer/:id',(req, res) =>{
+    Customer.findByPk(req.params.id).then(Customer => {
+        if (!Customer){
+            res.status(404).send('Customer not found');
+        } else{
+            res.json(Customer);
+        }
     }).catch(err => {
         res.status(500).send(err);
     });
