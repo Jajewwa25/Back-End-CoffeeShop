@@ -13,7 +13,7 @@ const sequelize = new Sequelize('database','username','password',{
 const Address = sequelize.define('Adress', {
     
   tax_id:{
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true
   },
@@ -30,7 +30,7 @@ const Address = sequelize.define('Adress', {
 const Customer = sequelize.define('Customer', {
     
     customer_id:{
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
@@ -55,7 +55,7 @@ const Customer = sequelize.define('Customer', {
   const Employee = sequelize.define('Employee', {
     
     employee_id:{
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
@@ -92,7 +92,7 @@ const Customer = sequelize.define('Customer', {
   const Item = sequelize.define('Item', {
     
     item_id:{
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
@@ -117,7 +117,7 @@ const Customer = sequelize.define('Customer', {
   const Order = sequelize.define('Order', {
     
     order_id:{
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
@@ -167,7 +167,7 @@ const Customer = sequelize.define('Customer', {
     });
 
     app.put('/Address',(req,res) => {
-
+        Address.findByPk(req.params.id).then(Address => {
             if (!Address) {
                 res.status(404).send('Address not found');
             } else {
@@ -177,19 +177,25 @@ const Customer = sequelize.define('Customer', {
                     res.status(500).send(err);
                 });
             }
+        }).catch(err => {
+            res.status(500).send(err);
+        });
     });
 
     app.delete('/Address',(req,res) => {
-        
-        if (!Address){
-            res.status(404).send('Address not found');
-        } else {
-            Address.destroy().then(() => {
-                res.send({});
-            }).catch(err => {
-                res.status(500).send(err);
-            });
-        }
+        Address.findByPk(req.params.id).then(Address=> {
+            if (!Address){
+                res.status(404).send('Address not found');
+            } else {
+                Address.destroy().then(() => {
+                    res.send({});
+                }).catch(err => {
+                    res.status(500).send(err);
+                });
+            }
+        }).catch(err => {
+            res.status(500).send(err);
+        });
     });
 //---------------Customer---------------------
 
@@ -210,7 +216,7 @@ const Customer = sequelize.define('Customer', {
     });
 
     app.put('/Customer',(req,res) => {
-
+        Customer.findByPk(req.params.id).then(Customer => {
             if (!Customer) {
                 res.status(404).send('Customer not found');
             } else {
@@ -220,19 +226,25 @@ const Customer = sequelize.define('Customer', {
                     res.status(500).send(err);
                 });
             }
+        }).catch(err => {
+            res.status(500).send(err);
+        });
     });
 
-    app.delete('/Customer',(req,res) => {
-        
-        if (!Customer){
-            res.status(404).send('Customer not found');
-        } else {
-            Customer.destroy().then(() => {
-                res.send({});
-            }).catch(err => {
-                res.status(500).send(err);
-            });
-        }
+    app.delete('/Customer',(req,res) => {   
+        Customer.findByPk(req.params.id).then(Customer=> {
+            if (!Customer){
+                res.status(404).send('Customer not found');
+            } else {
+                Customer.destroy().then(() => {
+                    res.send({});
+                }).catch(err => {
+                    res.status(500).send(err);
+                });
+            }
+        }).catch(err => {
+            res.status(500).send(err);
+        });
     });
 
 //---------------------Employee---------------------
@@ -254,7 +266,7 @@ const Customer = sequelize.define('Customer', {
     });
 
     app.put('/Employee',(req,res) => {
-
+        Employee.findByPk(req.params.id).then(Employee => {
             if (!Employee) {
                 res.status(404).send('Employee not found');
             } else {
@@ -264,20 +276,27 @@ const Customer = sequelize.define('Customer', {
                     res.status(500).send(err);
                 });
             }
+        }).catch(err => {
+            res.status(500).send(err);
+        });
     });
 
     app.delete('/Employee',(req,res) => {
-        
-        if (!Employee){
-            res.status(404).send('Employee not found');
-        } else {
-            Employee.destroy().then(() => {
-                res.send({});
-            }).catch(err => {
-                res.status(500).send(err);
-            });
-        }
+        Employee.findByPk(req.params.id).then(Employee=> {
+            if (!Employee){
+                res.status(404).send('Employee not found');
+            } else {
+                Employee.destroy().then(() => {
+                    res.send({});
+                }).catch(err => {
+                    res.status(500).send(err);
+                });
+            }
+        }).catch(err => {
+            res.status(500).send(err);
+        });
     });
+
 
 //--------------------Item-----------------------
 
@@ -298,7 +317,7 @@ app.post('/Item',(req, res) =>{
 });
 
 app.put('/Item',(req,res) => {
-
+    Item.findByPk(req.params.id).then(Item => {
         if (!Item) {
             res.status(404).send('Item not found');
         } else {
@@ -308,20 +327,28 @@ app.put('/Item',(req,res) => {
                 res.status(500).send(err);
             });
         }
+    }).catch(err => {
+        res.status(500).send(err);
+    });
 });
 
 app.delete('/Item',(req,res) => {
-    
-    if (!Item){
-        res.status(404).send('Item not found');
-    } else {
-        Item.destroy().then(() => {
-            res.send({});
-        }).catch(err => {
-            res.status(500).send(err);
-        });
-    }
+    Item.findByPk(req.params.id).then(Item=> {
+        if (!Item){
+            res.status(404).send('Item not found');
+        } else {
+            Item.destroy().then(() => {
+                res.send({});
+            }).catch(err => {
+                res.status(500).send(err);
+            });
+        }
+    }).catch(err => {
+        res.status(500).send(err);
+    });
 });
+
+
 
 //----------------Order--------------------------
 
@@ -342,7 +369,7 @@ app.post('/Order',(req, res) =>{
 });
 
 app.put('/Order',(req,res) => {
-
+    Order.findByPk(req.params.id).then(Order => {
         if (!Order) {
             res.status(404).send('Order not found');
         } else {
@@ -352,19 +379,24 @@ app.put('/Order',(req,res) => {
                 res.status(500).send(err);
             });
         }
+    }).catch(err => {
+        res.status(500).send(err);
+    });
 });
-
 app.delete('/Order',(req,res) => {
-    
-    if (!Order){
-        res.status(404).send('Order not found');
-    } else {
-        Order.destroy().then(() => {
-            res.send({});
-        }).catch(err => {
-            res.status(500).send(err);
-        });
-    }
+    Order.findByPk(req.params.id).then(Order=> {
+        if (!Order){
+            res.status(404).send('Order not found');
+        } else {
+            Order.destroy().then(() => {
+                res.send({});
+            }).catch(err => {
+                res.status(500).send(err);
+            });
+        }
+    }).catch(err => {
+        res.status(500).send(err);
+    });
 });
 
 const port = process.env.PORT || 3000;
