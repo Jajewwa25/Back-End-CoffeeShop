@@ -281,41 +281,41 @@ const Customer = sequelize.define('Customer', {
 
 //--------------------Item-----------------------
 
-app.get('/Employee',(req, res) =>{
-    Employee.findAll().then(Employee => {
-        res.json(Employee);
+app.get('/Item',(req, res) =>{
+    Item.findAll().then(Item => {
+        res.json(Item);
     }).catch(err => {
         res.status(500).send(err);
     });
 });
 
-app.post('/Employee',(req, res) =>{
-    Employee.create(req.body).then(Employee => {
-        res.send(Employee);
+app.post('/Item',(req, res) =>{
+    Item.create(req.body).then(Item => {
+        res.send(Item);
     }).catch(err => {
             res.status(500).send(err);
         });
 });
 
-app.put('/Employee',(req,res) => {
+app.put('/Item',(req,res) => {
 
-        if (!Employee) {
-            res.status(404).send('Employee not found');
+        if (!Item) {
+            res.status(404).send('Item not found');
         } else {
-            Employee.update(req.body).then(() =>{
-                res.send(Employee);
+            Item.update(req.body).then(() =>{
+                res.send(Item);
             }).catch(err => {
                 res.status(500).send(err);
             });
         }
 });
 
-app.delete('/Employee',(req,res) => {
+app.delete('/Item',(req,res) => {
     
-    if (!Employee){
-        res.status(404).send('Employee not found');
+    if (!Item){
+        res.status(404).send('Item not found');
     } else {
-        Employee.destroy().then(() => {
+        Item.destroy().then(() => {
             res.send({});
         }).catch(err => {
             res.status(500).send(err);
@@ -325,41 +325,41 @@ app.delete('/Employee',(req,res) => {
 
 //----------------Order--------------------------
 
-app.get('/Employee',(req, res) =>{
-    Employee.findAll().then(Employee => {
-        res.json(Employee);
+app.get('/Order',(req, res) =>{
+    Order.findAll().then(Order => {
+        res.json(Order);
     }).catch(err => {
         res.status(500).send(err);
     });
 });
 
-app.post('/Employee',(req, res) =>{
-    Employee.create(req.body).then(Employee => {
-        res.send(Employee);
+app.post('/Order',(req, res) =>{
+    Order.create(req.body).then(Order => {
+        res.send(Order);
     }).catch(err => {
             res.status(500).send(err);
         });
 });
 
-app.put('/Employee',(req,res) => {
+app.put('/Order',(req,res) => {
 
-        if (!Employee) {
-            res.status(404).send('Employee not found');
+        if (!Order) {
+            res.status(404).send('Order not found');
         } else {
-            Employee.update(req.body).then(() =>{
-                res.send(Employee);
+            Order.update(req.body).then(() =>{
+                res.send(Order);
             }).catch(err => {
                 res.status(500).send(err);
             });
         }
 });
 
-app.delete('/Employee',(req,res) => {
+app.delete('/Order',(req,res) => {
     
-    if (!Employee){
-        res.status(404).send('Employee not found');
+    if (!Order){
+        res.status(404).send('Order not found');
     } else {
-        Employee.destroy().then(() => {
+        Order.destroy().then(() => {
             res.send({});
         }).catch(err => {
             res.status(500).send(err);
