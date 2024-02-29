@@ -396,12 +396,12 @@ app.get('/Order',(req, res) =>{
     });
 });
 
-app.get('/Customer/:id',(req, res) =>{
-    Customer.findByPk(req.params.id).then(Customer => {
-        if (!Customer){
-            res.status(404).send('Customer not found');
+app.get('/Order/:id',(req, res) =>{
+    Order.findByPk(req.params.id).then(Order => {
+        if (!Order){
+            res.status(404).send('Order not found');
         } else{
-            res.json(Customer);
+            res.json(Order);
         }
     }).catch(err => {
         res.status(500).send(err);
