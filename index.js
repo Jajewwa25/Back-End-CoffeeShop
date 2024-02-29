@@ -148,6 +148,7 @@ const Customer = sequelize.define('Customer', {
   });
 
   sequelize.sync();
+  //-----------------Address------------------------
 
     app.get('/Address',(req, res) =>{
         Address.findAll().then(Address => {
@@ -159,7 +160,7 @@ const Customer = sequelize.define('Customer', {
 
     app.post('/Address',(req, res) =>{
         Book.create(req.body).then(Address => {
-            res.send(Adress);
+            res.send(Address);
         }).catch(err => {
                 res.status(500).send(err);
             });
@@ -190,6 +191,181 @@ const Customer = sequelize.define('Customer', {
             });
         }
     });
+//---------------Customer---------------------
+
+    app.get('/Customer',(req, res) =>{
+        Customer.findAll().then(Customer => {
+            res.json(Customer);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    });
+
+    app.post('/Customer',(req, res) =>{
+        Customer.create(req.body).then(Customer => {
+            res.send(Customer);
+        }).catch(err => {
+                res.status(500).send(err);
+            });
+    });
+
+    app.put('/Customer',(req,res) => {
+
+            if (!Customer) {
+                res.status(404).send('Customer not found');
+            } else {
+                Customer.update(req.body).then(() =>{
+                    res.send(Customer);
+                }).catch(err => {
+                    res.status(500).send(err);
+                });
+            }
+    });
+
+    app.delete('/Customer',(req,res) => {
+        
+        if (!Customer){
+            res.status(404).send('Customer not found');
+        } else {
+            Customer.destroy().then(() => {
+                res.send({});
+            }).catch(err => {
+                res.status(500).send(err);
+            });
+        }
+    });
+
+//---------------------Employee---------------------
+
+    app.get('/Employee',(req, res) =>{
+        Employee.findAll().then(Employee => {
+            res.json(Employee);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    });
+
+    app.post('/Employee',(req, res) =>{
+        Employee.create(req.body).then(Employee => {
+            res.send(Employee);
+        }).catch(err => {
+                res.status(500).send(err);
+            });
+    });
+
+    app.put('/Employee',(req,res) => {
+
+            if (!Employee) {
+                res.status(404).send('Employee not found');
+            } else {
+                Employee.update(req.body).then(() =>{
+                    res.send(Employee);
+                }).catch(err => {
+                    res.status(500).send(err);
+                });
+            }
+    });
+
+    app.delete('/Employee',(req,res) => {
+        
+        if (!Employee){
+            res.status(404).send('Employee not found');
+        } else {
+            Employee.destroy().then(() => {
+                res.send({});
+            }).catch(err => {
+                res.status(500).send(err);
+            });
+        }
+    });
+
+//--------------------Item-----------------------
+
+app.get('/Employee',(req, res) =>{
+    Employee.findAll().then(Employee => {
+        res.json(Employee);
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+});
+
+app.post('/Employee',(req, res) =>{
+    Employee.create(req.body).then(Employee => {
+        res.send(Employee);
+    }).catch(err => {
+            res.status(500).send(err);
+        });
+});
+
+app.put('/Employee',(req,res) => {
+
+        if (!Employee) {
+            res.status(404).send('Employee not found');
+        } else {
+            Employee.update(req.body).then(() =>{
+                res.send(Employee);
+            }).catch(err => {
+                res.status(500).send(err);
+            });
+        }
+});
+
+app.delete('/Employee',(req,res) => {
+    
+    if (!Employee){
+        res.status(404).send('Employee not found');
+    } else {
+        Employee.destroy().then(() => {
+            res.send({});
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    }
+});
+
+//----------------Order--------------------------
+
+app.get('/Employee',(req, res) =>{
+    Employee.findAll().then(Employee => {
+        res.json(Employee);
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+});
+
+app.post('/Employee',(req, res) =>{
+    Employee.create(req.body).then(Employee => {
+        res.send(Employee);
+    }).catch(err => {
+            res.status(500).send(err);
+        });
+});
+
+app.put('/Employee',(req,res) => {
+
+        if (!Employee) {
+            res.status(404).send('Employee not found');
+        } else {
+            Employee.update(req.body).then(() =>{
+                res.send(Employee);
+            }).catch(err => {
+                res.status(500).send(err);
+            });
+        }
+});
+
+app.delete('/Employee',(req,res) => {
+    
+    if (!Employee){
+        res.status(404).send('Employee not found');
+    } else {
+        Employee.destroy().then(() => {
+            res.send({});
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    }
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port http://localhost:${port}`)); 
