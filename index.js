@@ -29,7 +29,7 @@ const Address = sequelize.define('Address', {
   },
 });
 
-const Customer = sequelize.define('Customers', {
+const Customer = sequelize.define('Customer', {
     
     customer_id:{
         type: Sequelize.INTEGER,
@@ -199,6 +199,8 @@ const Customer = sequelize.define('Customers', {
             res.status(500).send(err);
         });
     });
+
+
 //---------------Customer---------------------
 
     app.get('/Customers',(req, res) =>{
@@ -262,6 +264,8 @@ const Customer = sequelize.define('Customers', {
         });
     });
 
+    
+
 //---------------------Employee---------------------
 
     app.get('/Employee',(req, res) =>{
@@ -323,6 +327,15 @@ const Customer = sequelize.define('Customers', {
         });
     });
 
+    app.get("/about", (req, res) => {
+        Employee.findAll() //select * from
+          .then((about) => {
+            res.json(about);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+      });
 
 //--------------------Item-----------------------
 
