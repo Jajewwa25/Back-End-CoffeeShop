@@ -29,7 +29,7 @@ const Address = sequelize.define('Address', {
   },
 });
 
-const Customer = sequelize.define('Customers', {
+const Customer = sequelize.define('Customer', {
     
     customer_id:{
         type: Sequelize.INTEGER,
@@ -150,17 +150,6 @@ const Customer = sequelize.define('Customers', {
   });
 
   sequelize.sync();
-
-  app.get("/order", (req, res) => {
-    Order.findAll() //select * from
-      .then((order) => {
-        res.json(order);
-      })
-      .catch((err) => {
-        res.status(500).send(err);
-      });
-  });
-
   //-----------------Address------------------------
 
     app.get('/Address',(req, res) =>{
@@ -210,6 +199,8 @@ const Customer = sequelize.define('Customers', {
             res.status(500).send(err);
         });
     });
+
+
 //---------------Customer---------------------
 
     app.get('/Customer',(req, res) =>{
@@ -273,15 +264,7 @@ const Customer = sequelize.define('Customers', {
         });
     });
 
-    app.get("/login", (req, res) => {
-        Customer.findAll() //select * from
-          .then((login) => {
-            res.json(login);
-          })
-          .catch((err) => {
-            res.status(500).send(err);
-          });
-      });
+    
 
 //---------------------Employee---------------------
 
@@ -344,6 +327,15 @@ const Customer = sequelize.define('Customers', {
         });
     });
 
+    app.get("/about", (req, res) => {
+        Employee.findAll() //select * from
+          .then((about) => {
+            res.json(about);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+      });
 
 //--------------------Item-----------------------
 
