@@ -29,7 +29,7 @@ const Address = sequelize.define('Address', {
   },
 });
 
-const Customer = sequelize.define('Customer', {
+const Customer = sequelize.define('Customers', {
     
     customer_id:{
         type: Sequelize.INTEGER,
