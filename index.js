@@ -264,7 +264,15 @@ const Customer = sequelize.define('Customer', {
         });
     });
 
-    
+    app.get("/Register", (req, res) => {
+        Customer.findAll() //select * from
+          .then((Register) => {
+            res.json(Register);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+      });
 
 //---------------------Employee---------------------
 
