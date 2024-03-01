@@ -201,20 +201,20 @@ const Customer = sequelize.define('Customers', {
     });
 //---------------Customer---------------------
 
-    app.get('/Customer',(req, res) =>{
-        Customer.findAll().then(Customer => {
-            res.json(Customer);
+    app.get('/Customers',(req, res) =>{
+        Customer.findAll().then(Customers => {
+            res.json(Customers);
         }).catch(err => {
             res.status(500).send(err);
         });
     });
 
-    app.get('/Customer/:id',(req, res) =>{
-        Customer.findByPk(req.params.id).then(Customer => {
-            if (!Customer){
-                res.status(404).send('Customer not found');
+    app.get('/Customers/:id',(req, res) =>{
+        Customer.findByPk(req.params.id).then(Customers => {
+            if (!Customers){
+                res.status(404).send('Customers not found');
             } else{
-                res.json(Customer);
+                res.json(Customers);
             }
         }).catch(err => {
             res.status(500).send(err);
@@ -222,21 +222,21 @@ const Customer = sequelize.define('Customers', {
     });
     
 
-    app.post('/Customer',(req, res) =>{
-        Customer.create(req.body).then(Customer => {
-            res.send(Customer);
+    app.post('/Customers',(req, res) =>{
+        Customer.create(req.body).then(Customers => {
+            res.send(Customers);
         }).catch(err => {
                 res.status(500).send(err);
             });
     });
 
-    app.put('/Customer/:id',(req,res) => {
-        Customer.findByPk(req.params.id).then(Customer => {
-            if (!Customer) {
-                res.status(404).send('Customer not found');
+    app.put('/Customers/:id',(req,res) => {
+        Customer.findByPk(req.params.id).then(Customers => {
+            if (!Customers) {
+                res.status(404).send('Customers not found');
             } else {
-                Customer.update(req.body).then(() =>{
-                    res.send(Customer);
+                Customers.update(req.body).then(() =>{
+                    res.send(Customers);
                 }).catch(err => {
                     res.status(500).send(err);
                 });
@@ -246,12 +246,12 @@ const Customer = sequelize.define('Customers', {
         });
     });
 
-    app.delete('/Customer/:id',(req,res) => {   
-        Customer.findByPk(req.params.id).then(Customer=> {
-            if (!Customer){
-                res.status(404).send('Customer not found');
+    app.delete('/Customers/:id',(req,res) => {   
+        Customer.findByPk(req.params.id).then(Customers=> {
+            if (!Customers){
+                res.status(404).send('Customers not found');
             } else {
-                Customer.destroy().then(() => {
+                Customers.destroy().then(() => {
                     res.send({});
                 }).catch(err => {
                     res.status(500).send(err);
