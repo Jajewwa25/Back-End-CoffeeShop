@@ -150,6 +150,17 @@ const Customer = sequelize.define('Customer', {
   });
 
   sequelize.sync();
+
+  app.get("/order", (req, res) => {
+    Order.findAll() //select * from
+      .then((order) => {
+        res.json(order);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  });
+
   //-----------------Address------------------------
 
     app.get('/Address',(req, res) =>{
@@ -261,6 +272,16 @@ const Customer = sequelize.define('Customer', {
             res.status(500).send(err);
         });
     });
+
+    app.get("/login", (req, res) => {
+        Customer.findAll() //select * from
+          .then((login) => {
+            res.json(login);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+      });
 
 //---------------------Employee---------------------
 
