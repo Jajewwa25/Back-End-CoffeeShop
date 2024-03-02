@@ -52,10 +52,6 @@ const Customer = sequelize.define('customer', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    date:{
-        type: Sequelize.DATE,
-        allowNull: false
-    }
   });
 
   const Employee = sequelize.define('Employee', {
@@ -67,6 +63,10 @@ const Customer = sequelize.define('customer', {
     },
     username:{
         type: Sequelize.STRING,
+        allowNull: false
+    },
+    password:{
+        type: Sequelize.INTEGER,
         allowNull: false
     },
     age:{
@@ -89,10 +89,7 @@ const Customer = sequelize.define('customer', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    date:{
-        type: Sequelize.DATE,
-        allowNull: false
-    }
+    
   });
 
   const Item = sequelize.define('Item', {
@@ -102,22 +99,15 @@ const Customer = sequelize.define('customer', {
         autoIncrement: true,
         primaryKey: true
     },
-    item:{
-        type: Sequelize.INTEGER,
+    itemname:{
+        type: Sequelize.STRING,
         allowNull: false
     },
     price:{
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    size:{
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    date:{
-        type: Sequelize.DATE,
-        allowNull: false
-    }                    
+                      
   });
 
   const Order = sequelize.define('Order', {
@@ -147,10 +137,7 @@ const Customer = sequelize.define('customer', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    date:{
-        type: Sequelize.DATE,
-        allowNull: false
-    }
+   
   });
 
   sequelize.sync();
