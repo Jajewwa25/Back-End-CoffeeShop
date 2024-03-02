@@ -488,5 +488,15 @@ app.get("/cart", (req, res) => {
   });
 
 
+app.get("/cart", (req, res) => {
+    Order.findAll() //select * from
+      .then((cart) => {
+        res.json(cart);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  });
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port http://localhost:${port}`)); 
