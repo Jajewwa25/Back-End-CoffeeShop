@@ -416,6 +416,16 @@ app.get("/menu", (req, res) => {
       });
   });
 
+  app.get("/menu1", (req, res) => {
+    Item.findAll() //select * from
+      .then((menu1) => {
+        res.json(menu1);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  });
+
 //----------------Order--------------------------
 
 app.get('/Order',(req, res) =>{
@@ -461,6 +471,7 @@ app.put('/Order',(req,res) => {
         res.status(500).send(err);
     });
 });
+
 app.delete('/Order',(req,res) => {
     Order.findByPk(req.params.id).then(Order=> {
         if (!Order){
