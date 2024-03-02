@@ -220,7 +220,7 @@ app.get("/customer", (req, res) => {
             if (!Customer){
                 res.status(404).send('Customer not found');
             } else{
-                res.json(Customer);
+                res.json(Customers);
             }
         }).catch(err => {
             res.status(500).send(err);
@@ -242,8 +242,8 @@ app.get("/customer", (req, res) => {
             if (!Customer) {
                 res.status(404).send('Customer not found');
             } else {
-                Customer.update(req.body).then(() =>{
-                    res.send(Customer);
+                Customers.update(req.body).then(() =>{
+                    res.send(Customers);
                 }).catch(err => {
                     res.status(500).send(err);
                 });
@@ -258,7 +258,7 @@ app.get("/customer", (req, res) => {
             if (!Customer){
                 res.status(404).send('Customer not found');
             } else {
-                Customer.destroy().then(() => {
+                Customers.destroy().then(() => {
                     res.send({});
                 }).catch(err => {
                     res.status(500).send(err);
@@ -269,7 +269,15 @@ app.get("/customer", (req, res) => {
         });
     });
 
-    
+    app.get("/Register", (req, res) => {
+        Customer.findAll() //select * from
+          .then((Register) => {
+            res.json(Register);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+      });
 
     
 
@@ -406,6 +414,16 @@ app.delete('/Item/:id',(req,res) => {
         res.status(500).send(err);
     });
 });
+
+app.get("/menu", (req, res) => {
+    Item.findAll() //select * from
+      .then((menu) => {
+        res.json(menu);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  });
 
 //----------------Order--------------------------
 
