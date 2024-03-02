@@ -407,6 +407,16 @@ app.delete('/Item/:id',(req,res) => {
     });
 });
 
+app.get("/menu", (req, res) => {
+    Item.findAll() //select * from
+      .then((menu) => {
+        res.json(menu);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  });
+
 //----------------Order--------------------------
 
 app.get('/Order',(req, res) =>{
