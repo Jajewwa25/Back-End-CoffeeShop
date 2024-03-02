@@ -40,6 +40,10 @@ const Customer = sequelize.define('customer', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    password:{
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
     tel:{
         type: Sequelize.STRING,
         allowNull: false
