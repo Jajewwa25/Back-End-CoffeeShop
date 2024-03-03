@@ -107,7 +107,10 @@ const Customer = sequelize.define('customer', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-                      
+    img: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }        
   });
 
   const Order = sequelize.define('Order', {
