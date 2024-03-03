@@ -369,12 +369,12 @@ app.get('/Item/:id',(req, res) =>{
     });
 });
 
-app.post('/Item',(req, res) =>{
+app.post('/Items',(req, res) =>{
     Item.create(req.body).then(Item => {
         res.send(Item);
     }).catch(err => {
             res.status(500).send(err);
-        });
+    });
 });
 
 app.put('/Item/:id',(req,res) => {
