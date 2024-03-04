@@ -120,15 +120,7 @@ const Customer = sequelize.define('customer', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    employee_id:{
-        type: Sequelize.STRING,
-        allowNull: false
-    },
     customer_id:{
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    tax_id:{
         type: Sequelize.STRING,
         allowNull: false
     },
