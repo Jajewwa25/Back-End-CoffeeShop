@@ -77,18 +77,10 @@ const Customer = sequelize.define('customer', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    address:{
+    img: {
         type: Sequelize.STRING,
         allowNull: false
-    },
-    tel:{
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    email:{
-        type: Sequelize.STRING,
-        allowNull: false
-    },
+    }  
     
   });
 
