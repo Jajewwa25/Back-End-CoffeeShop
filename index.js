@@ -215,6 +215,7 @@ app.get("/customer", (req, res) => {
     
 
     app.post('/customer',(req, res) =>{
+        
         Customer.create(req.body).then(Customer => {
             res.send(Customer);
         }).catch(err => {
@@ -255,7 +256,7 @@ app.get("/customer", (req, res) => {
         });
     });
 
-    app.get("/Register", (req, res) => {
+    app.get("/register", (req, res) => {
         Customer.findAll() //select * from
           .then((Register) => {
             res.json(Register);
@@ -264,6 +265,18 @@ app.get("/customer", (req, res) => {
             res.status(500).send(err);
           });
       });
+
+      app.post("/register", async (req, res) => {
+        console.log(req.body);
+          Customer.create(req.body)
+            .then((customer) => {
+              res.send(customer);
+            })
+            .catch((err) => {
+              res.status(500).send(err);
+            });
+        }
+      );
 
     
 
