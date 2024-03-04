@@ -124,6 +124,10 @@ const Customer = sequelize.define('customer', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    qty:{
+        type: Sequelize.INTEGER,
+        allowNull: false
+    }
    
   });
 
@@ -491,7 +495,23 @@ app.delete('/Order',(req,res) => {
 app.get("/cart", (req, res) => {
     Order.findAll() //select * from
       .then((cart) => {
-        res.json(cart);
+        Item.findAll({})
+        .then((f)=>{
+            let arr = []
+            for(let i = 0 ; i<cart.length;i++){
+                for (let j = 0; j < f.length; j++){
+                    if(cart[i].dataValues.item_id == f[j].dataValues.item_id){
+                        f[j].dataValues.qty = cart[i].dataValues.qty;
+                        arr.push(f[j].dataValues)
+                    }
+                
+                }
+            }
+            
+            console.log(arr)
+            res.send(arr)
+        })
+        
       })
       .catch((err) => {
         res.status(500).send(err);
@@ -499,14 +519,30 @@ app.get("/cart", (req, res) => {
   });
 
 
-app.get("/cart", (req, res) => {
-    Order.findAll() //select * from
-      .then((cart) => {
-        res.json(cart);
-      })
-      .catch((err) => {
-        res.status(500).send(err);
-      });
+app.post("/cart", async(req, res) => {
+
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth()+1; 
+    let yyyy = today.getFullYear();
+    if(dd<10) 
+        dd='0'+dd;
+    if(mm<10) 
+        mm='0'+mm;
+    today = mm+'-'+dd+'-'+yyyy;
+
+    try{
+        const cart = await Order.create({
+            orderDate: today,
+            item_id: req.body.item_id,
+            customer_id: req.body.customer_id,
+            qty:req.body.qty
+          });
+        res.send(cart)
+    }catch(error){
+        console.error("Error creating cart:", error);
+        res.status(500).send("Internal Server Error");
+    }
   });
 
 const port = process.env.PORT || 3000;
