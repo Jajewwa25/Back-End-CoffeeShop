@@ -274,7 +274,6 @@ app.get("/customer", (req, res) => {
         }
       );
 
-    
 
 //---------------------Employee---------------------
 
@@ -370,7 +369,7 @@ app.get('/Item/:id',(req, res) =>{
     });
 });
 
-app.post('/Items',(req, res) =>{
+app.post('/Item',(req, res) =>{
     Item.create(req.body).then(Item => {
         res.send(Item);
     }).catch(err => {
