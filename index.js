@@ -466,34 +466,6 @@ app.get('/Order/:id',(req, res) =>{
     });
 });
 
-app.get('/Order/:id', (req, res) => { //copy จาก chatgpt กำลังแก้
-    Order.findAll({ where: { customer_id: req.params.id } })
-        .then((orders) => {
-            let orderData = [];
-            orders.forEach(order => {
-                Item.findOne({ where: { item_id: order.item_id } })
-                    .then(item => {
-                        orderData.push({
-                            order_id: order.order_id,
-                            item_id: order.item_id,
-                            itemname: item.itemname,
-                            customer_id: order.customer_id,
-                            tax_id: order.tax_id
-                        });
-                        if (orderData.length === orders.length) {
-                            res.render('order_template', { order: orderData });
-                        }
-                    })
-                    .catch(err => {
-                        res.status(500).send(err);
-                    });
-            });
-        })
-        .catch((err) => {
-            res.status(500).send(err);
-        });
-});
-
 
 app.post('/Order',(req, res) =>{
     Order.create(req.body).then(Order => {
@@ -534,57 +506,107 @@ app.delete('/Order',(req,res) => {
         res.status(500).send(err);
     });
 });
-
-app.get("/cart/:id", (req, res) => {
-    Order.findAll({ where: { customer_id: req.params.id } })
-    .then((e) => {
-      Item.findAll().then((f) => {
-        let arr = [];
-        for (let i = 0; i < e.length; i++)
-          for (let j = 0; j < f.length; j++)
-            if (e[i].dataValues.item_id == f[j].dataValues.item_id){
-                 f[j].qty = e[i].qty;
-                 arr.push(f[j]);
-            }
+////////////ไฟล์ แพรวา ////////////////////////
+// app.get("/cart/:id", (req, res) => {
+//     Order.findAll({ where: { customer_id: req.params.id } })
+//     .then((e) => {
+//       Item.findAll().then((f) => {
+//         let arr = [];
+//         for (let i = 0; i < e.length; i++)
+//           for (let j = 0; j < f.length; j++)
+//             if (e[i].dataValues.item_id == f[j].dataValues.item_id){
+//                  f[j].qty = e[i].qty;
+//                  arr.push(f[j]);
+//             }
              
-        console.log(arr[0].qty,"Hello")
-        res.json(arr);
+//         console.log(arr[0].qty,"Hello")
+//         res.json(arr);
+//       });
+//     })
+//     .catch((err) => {
+//       res.status(500).send(err);
+//     });
+//   });
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// app.post("/cart", async(req, res) => {
+
+//     let today = new Date();
+//     let dd = today.getDate();
+//     let mm = today.getMonth()+1; 
+//     let yyyy = today.getFullYear();
+//     if(dd<10) 
+//         dd='0'+dd;
+//     if(mm<10) 
+//         mm='0'+mm;
+//     today = mm+'-'+dd+'-'+yyyy;
+
+//     try{
+//         console.log(req.body)
+//         const cart = await Order.create({
+//             orderDate: today,
+//             item_id: req.body.item_id,
+//             customer_id: req.body.customer_id,
+//             qty:req.body.qty
+//           });
+//         res.send(cart)
+//     }catch(error){
+//         console.error("Error creating cart:", error);
+//         res.status(500).send("Internal Server Error");
+//     }
+//   });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////ไฟล์ chat GPT //////////////////////////////////////////////////////
+app.get("/cart/:id", async (req, res) => {
+    try {
+      const customerId = req.params.id;
+      const orders = await Order.findAll({ where: { customer_id: customerId } });
+      const items = await Item.findAll();
+  
+      const cartItems = orders.map(order => {
+        const item = items.find(item => item.item_id === order.item_id);
+        return { ...item.dataValues, qty: order.qty };
       });
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
-  });
-
-
-app.post("/cart", async(req, res) => {
-
-    let today = new Date();
-    let dd = today.getDate();
-    let mm = today.getMonth()+1; 
-    let yyyy = today.getFullYear();
-    if(dd<10) 
-        dd='0'+dd;
-    if(mm<10) 
-        mm='0'+mm;
-    today = mm+'-'+dd+'-'+yyyy;
-
-    try{
-        console.log(req.body)
-        const cart = await Order.create({
-            orderDate: today,
-            item_id: req.body.item_id,
-            customer_id: req.body.customer_id,
-            qty:req.body.qty
-          });
-        res.send(cart)
-    }catch(error){
-        console.error("Error creating cart:", error);
-        res.status(500).send("Internal Server Error");
+  
+      res.json(cartItems);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error");
     }
   });
-
+  
+  app.post("/cart", async (req, res) => {
+    try {
+      let today = new Date();
+      let dd = today.getDate();
+      let mm = today.getMonth() + 1;
+      let yyyy = today.getFullYear();
+      if (dd < 10) dd = '0' + dd;
+      if (mm < 10) mm = '0' + mm;
+      today = mm + '-' + dd + '-' + yyyy;
+  
+      const { item_id, customer_id, qty } = req.body;
+      console.log("item:"+item_id+" customer:"+customer_id," qty:"+qty)
+      await Order.create({
+        orderDate: today,
+        item_id: item_id,
+        customer_id: customer_id,
+        qty: qty
+      });
+      console.log("success")
+      
+  
+      res.redirect("/cart/" + customer_id);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error");
+    }
+  });
+  //////////////////////////////////////////////////////////////////////////////////////////////////
   
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port http://localhost:${port}`)); 
+app.listen(port, () => console.log(`Listening on port http://localhost:${port}`));
