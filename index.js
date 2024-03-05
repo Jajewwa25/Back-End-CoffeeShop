@@ -466,6 +466,35 @@ app.get('/Order/:id',(req, res) =>{
     });
 });
 
+app.get('/Order/:id', (req, res) => { //copy จาก chatgpt กำลังแก้
+    Order.findAll({ where: { customer_id: req.params.id } })
+        .then((orders) => {
+            let orderData = [];
+            orders.forEach(order => {
+                Item.findOne({ where: { item_id: order.item_id } })
+                    .then(item => {
+                        orderData.push({
+                            order_id: order.order_id,
+                            item_id: order.item_id,
+                            itemname: item.itemname,
+                            customer_id: order.customer_id,
+                            tax_id: order.tax_id
+                        });
+                        if (orderData.length === orders.length) {
+                            res.render('order_template', { order: orderData });
+                        }
+                    })
+                    .catch(err => {
+                        res.status(500).send(err);
+                    });
+            });
+        })
+        .catch((err) => {
+            res.status(500).send(err);
+        });
+});
+
+
 app.post('/Order',(req, res) =>{
     Order.create(req.body).then(Order => {
         res.send(Order);
@@ -518,7 +547,7 @@ app.get("/cart/:id", (req, res) => {
                  arr.push(f[j]);
             }
              
-
+        console.log(arr[0].qty,"Hello")
         res.json(arr);
       });
     })
