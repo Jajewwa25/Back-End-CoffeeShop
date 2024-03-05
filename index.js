@@ -274,6 +274,20 @@ app.get("/customer", (req, res) => {
         }
       );
 
+      app.post("/login",async (req,res) => {
+        try {
+            const { username, password } = req.body;
+            const customer = await Customer.findOne({ where: { username } });
+            if (!customer) return res.json({ message: "User_not_found" });
+            else if (customer.password != password)
+              return res.json({ message: "Wrong_Password" });
+            return res.status(200).json({ message: true, customer: customer });
+          } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Server_error" });
+          }
+      })
+
     
 
 //---------------------Employee---------------------
@@ -492,30 +506,25 @@ app.delete('/Order',(req,res) => {
     });
 });
 
-app.get("/cart", (req, res) => {
-    Order.findAll() //select * from
-      .then((cart) => {
-        Item.findAll({})
-        .then((f)=>{
-            let arr = []
-            for(let i = 0 ; i<cart.length;i++){
-                for (let j = 0; j < f.length; j++){
-                    if(cart[i].dataValues.item_id == f[j].dataValues.item_id){
-                        f[j].dataValues.qty = cart[i].dataValues.qty;
-                        arr.push(f[j].dataValues)
-                    }
-                
-                }
+app.get("/cart/:id", (req, res) => {
+    Order.findAll({ where: { customer_id: req.params.id } })
+    .then((e) => {
+      Item.findAll().then((f) => {
+        let arr = [];
+        for (let i = 0; i < e.length; i++)
+          for (let j = 0; j < f.length; j++)
+            if (e[i].dataValues.item_id == f[j].dataValues.item_id){
+                 f[j].qty = e[i].qty;
+                 arr.push(f[j]);
             }
-            
-            console.log(arr)
-            res.send(arr)
-        })
-        
-      })
-      .catch((err) => {
-        res.status(500).send(err);
+             
+
+        res.json(arr);
       });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
   });
 
 
@@ -532,6 +541,7 @@ app.post("/cart", async(req, res) => {
     today = mm+'-'+dd+'-'+yyyy;
 
     try{
+        console.log(req.body)
         const cart = await Order.create({
             orderDate: today,
             item_id: req.body.item_id,
