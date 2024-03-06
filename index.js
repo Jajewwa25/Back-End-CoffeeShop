@@ -288,7 +288,7 @@ app.get("/customer", (req, res) => {
           }
       })
 
-    
+
 
 //---------------------Employee---------------------
 
@@ -506,6 +506,10 @@ app.delete('/Order',(req,res) => {
         res.status(500).send(err);
     });
 });
+
+
+
+
 ////////////ไฟล์ แพรวา ////////////////////////
 // app.get("/cart/:id", (req, res) => {
 //     Order.findAll({ where: { customer_id: req.params.id } })
@@ -560,51 +564,51 @@ app.delete('/Order',(req,res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////ไฟล์ chat GPT //////////////////////////////////////////////////////
-app.get("/cart/:id", async (req, res) => {
-    try {
-      const customerId = req.params.id;
-      const orders = await Order.findAll({ where: { customer_id: customerId } });
-      const items = await Item.findAll();
+// app.get("/cart/:id", async (req, res) => {
+//     try {
+//       const customerId = req.params.id;
+//       const orders = await Order.findAll({ where: { customer_id: customerId } });
+//       const items = await Item.findAll();
   
-      const cartItems = orders.map(order => {
-        const item = items.find(item => item.item_id === order.item_id);
-        return { ...item.dataValues, qty: order.qty };
-      });
+//       const cartItems = orders.map(order => {
+//         const item = items.find(item => item.item_id === order.item_id);
+//         return { ...item.dataValues, qty: order.qty };
+//       });
   
-      res.json(cartItems);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Error");
-    }
-  });
+//       res.json(cartItems);
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).send("Error");
+//     }
+//   });
   
-  app.post("/cart", async (req, res) => {
-    try {
-      let today = new Date();
-      let dd = today.getDate();
-      let mm = today.getMonth() + 1;
-      let yyyy = today.getFullYear();
-      if (dd < 10) dd = '0' + dd;
-      if (mm < 10) mm = '0' + mm;
-      today = mm + '-' + dd + '-' + yyyy;
+//   app.post("/cart", async (req, res) => {
+//     try {
+//       let today = new Date();
+//       let dd = today.getDate();
+//       let mm = today.getMonth() + 1;
+//       let yyyy = today.getFullYear();
+//       if (dd < 10) dd = '0' + dd;
+//       if (mm < 10) mm = '0' + mm;
+//       today = mm + '-' + dd + '-' + yyyy;
   
-      const { item_id, customer_id, qty } = req.body;
-      console.log("item:"+item_id+" customer:"+customer_id," qty:"+qty)
-      await Order.create({
-        orderDate: today,
-        item_id: item_id,
-        customer_id: customer_id,
-        qty: qty
-      });
-      console.log("success")
+//       const { item_id, customer_id, qty } = req.body;
+//       console.log("item:"+item_id+" customer:"+customer_id," qty:"+qty)
+//       await Order.create({
+//         orderDate: today,
+//         item_id: item_id,
+//         customer_id: customer_id,
+//         qty: qty
+//       });
+//       console.log("success")
       
   
-      res.redirect("/cart/" + customer_id);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Error");
-    }
-  });
+//       res.redirect("/cart/" + customer_id);
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).send("Error");
+//     }
+//   });
   //////////////////////////////////////////////////////////////////////////////////////////////////
   
 
