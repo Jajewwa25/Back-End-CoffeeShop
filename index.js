@@ -112,10 +112,6 @@ const Customer = sequelize.define('customer', {
         autoIncrement: true,
         primaryKey: true
     },
-    orderDate:{
-        type: Sequelize.DATE,
-        allowNull: false
-    },
     item_id:{
         type: Sequelize.STRING,
         allowNull: false
@@ -467,13 +463,20 @@ app.get('/Order/:id',(req, res) =>{
 });
 
 
-app.post('/Order',(req, res) =>{
-    Order.create(req.body).then(Order => {
-        res.send(Order);
-    }).catch(err => {
-            res.status(500).send(err);
+app.post('/Order',async(req, res) =>{
+    try {
+        const sale = await Order.create({
+            customer_id: req.body.customer_id,
+            item_id: req.body.item_id,
+            qty: req.body.qty
         });
-});
+
+        res.send(sale);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+}); 
 
 app.put('/Order',(req,res) => {
     Order.findByPk(req.params.id).then(Order => {
