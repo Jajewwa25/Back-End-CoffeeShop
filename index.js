@@ -493,7 +493,7 @@ app.put('/Order',(req,res) => {
     });
 });
 
-app.delete('/Order',(req,res) => {
+app.delete('/Order/:id',(req,res) => {
     Order.findByPk(req.params.id).then(Order=> {
         if (!Order){
             res.status(404).send('Order not found');
