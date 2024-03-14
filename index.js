@@ -135,7 +135,7 @@ app.get("/Address", (req, res) => {
 });
 
 app.post("/Address", (req, res) => {
-  Book.create(req.body)
+  Address.create(req.body)
     .then((Address) => {
       res.send(Address);
     })
